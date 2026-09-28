@@ -11,7 +11,7 @@ export interface Message {
   chatId: string;
   text: string;
   outgoing: boolean;
-  timestamp: number; // ms
+  timestamp: number;
   status?: MessageStatus;
 }
 

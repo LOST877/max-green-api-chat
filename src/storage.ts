@@ -16,14 +16,16 @@ function read<T>(key: string, fallback: T): T {
 function write(key: string, value: unknown) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
-  } catch {
-    /* storage unavailable — keep working in memory */
-  }
+  } catch {}
 }
 
 export const loadCredentials = () => read<Credentials | null>(KEY_CREDENTIALS, null);
 export const saveCredentials = (c: Credentials) => write(KEY_CREDENTIALS, c);
-export const clearCredentials = () => localStorage.removeItem(KEY_CREDENTIALS);
+export function clearCredentials() {
+  try {
+    localStorage.removeItem(KEY_CREDENTIALS);
+  } catch {}
+}
 
 export const loadChats = (idInstance: string) => read<Chat[]>(keyChats(idInstance), []);
 export const saveChats = (idInstance: string, chats: Chat[]) => write(keyChats(idInstance), chats);

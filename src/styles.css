@@ -30,7 +30,6 @@ input, textarea { font: inherit; color: inherit; }
 .link-btn { border: 0; background: none; color: var(--accent); padding: 4px 8px; }
 .error { color: var(--danger); font-size: 13px; }
 
-/* ---------- Login ---------- */
 .login { height: 100%; display: flex; align-items: center; justify-content: center; padding: 16px; }
 .login__card {
   width: 100%; max-width: 380px; background: var(--panel); border-radius: 20px;
@@ -51,7 +50,6 @@ input, textarea { font: inherit; color: inherit; }
 }
 .login input:focus, .new-chat input:focus { border-color: var(--accent); background: #fff; }
 
-/* ---------- Layout ---------- */
 .messenger { height: 100%; display: flex; }
 
 .sidebar {
@@ -87,7 +85,6 @@ input, textarea { font: inherit; color: inherit; }
   display: flex; align-items: center; justify-content: center; font-size: 17px;
 }
 
-/* ---------- Chat ---------- */
 .chat { flex: 1; min-width: 0; display: flex; flex-direction: column; background: var(--bg); }
 .chat--empty { align-items: center; justify-content: center; }
 .chat__placeholder { color: var(--muted); text-align: center; padding: 24px; margin: auto; }
@@ -131,7 +128,6 @@ input, textarea { font: inherit; color: inherit; }
   background: var(--accent-grad); color: #fff; display: flex; align-items: center; justify-content: center;
 }
 
-/* ---------- Mobile ---------- */
 @media (max-width: 720px) {
   .sidebar { width: 100%; border-right: 0; }
   .sidebar--hidden-mobile { display: none; }

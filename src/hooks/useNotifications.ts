@@ -10,7 +10,6 @@ export interface IncomingEvent {
   senderName?: string;
 }
 
-/** Extracts a text message from a notification, or null if it is not one. */
 function toEvent(n: Notification): IncomingEvent | null {
   const { body } = n;
   const outgoing =
@@ -35,23 +34,23 @@ function toEvent(n: Notification): IncomingEvent | null {
       timestamp: (body.timestamp ?? Date.now() / 1000) * 1000,
       status: outgoing ? 'sent' : undefined,
     },
-    senderName: outgoing ? undefined : body.senderData.senderName || body.senderData.chatName,
+    senderName: outgoing ? body.senderData.chatName : body.senderData.senderName || body.senderData.chatName,
   };
 }
 
 const sleep = (ms: number, signal: AbortSignal) =>
   new Promise<void>((resolve) => {
     const t = setTimeout(resolve, ms);
-    signal.addEventListener('abort', () => {
-      clearTimeout(t);
-      resolve();
-    });
+    signal.addEventListener(
+      'abort',
+      () => {
+        clearTimeout(t);
+        resolve();
+      },
+      { once: true },
+    );
   });
 
-/**
- * Polls the GREEN-API notification queue (HTTP API technology):
- * receiveNotification → handle → deleteNotification, in a loop.
- */
 export function useNotifications(
   credentials: Credentials,
   onEvent: (e: IncomingEvent) => void,
@@ -75,7 +74,6 @@ export function useNotifications(
 
           const event = toEvent(notification);
           if (event) onEventRef.current(event);
-          // Delete every notification (including statuses) so the queue never gets stuck.
           await deleteNotification(credentials, notification.receiptId, signal);
         } catch (err) {
           if (signal.aborted) return;
